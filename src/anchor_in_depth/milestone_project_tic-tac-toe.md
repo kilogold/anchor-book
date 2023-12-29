@@ -331,13 +331,16 @@ import { expect } from "chai";
 > This is likely because the test file is looking for types from your program that haven't been generated yet.
 > To generate them, run `anchor build`. This builds the program and creates the idl and typescript types.
 
-The test begins by creating some keypairs. Importantly, `playerOne` is not a keypair but the wallet of the program's provider. The provider details are defined in the `Anchor.toml` file in the root of the project. The provider serves as the keypair that pays for (and therefore signs) all transactions.
-Then, we send the transaction.
-The structure of the transaction function is as follows: First come the instruction arguments. For this function, the public key of the second player. Then come the accounts. Lastly, we add a signers array. We have to add the `gameKeypair` here because whenever an account gets created, it has to sign its creation transaction. We don't have to add `playerOne` even though we gave it the `Signer` type in the program because it is the program provider and therefore signs the transaction by default.
+What's happening here is: 
+1. The test begins by creating some keypairs. Importantly, `playerOne` is not a keypair but the wallet of the program's provider. The provider details are defined in the `Anchor.toml` file in the root of the project. The provider serves as the keypair that pays for (and therefore signs) all transactions.
+1. Then, we send the transaction. The structure of the transaction function is as follows: 
+   1. First come the instruction arguments. For this function, the public key of the second player.
+   1. Then come the accounts.
+   1. Lastly, we add a signers array. We have to add the `gameKeypair` here because whenever an account gets created, it has to sign its creation transaction. We don't have to add `playerOne` even though we gave it the `Signer` type in the program because it is the program provider and therefore signs the transaction by default.  
 We did not have to specify the `system_program` account. This is because anchor recognizes this account and is able to infer it. This is also true for other known accounts such as the `token_program` or the `rent` sysvar account.
 
-After the transaction returns, we can fetch the state of the game account. You can fetch account state using the `program.account` namespace.
-Finally, we verify the game has been set up properly by comparing the actual state and the expected state. To learn how Anchor maps the Rust types to the js/ts types, check out the [Javascript Anchor Types Reference](./../anchor_references/javascript_anchor_types_reference.md).
+1. After the transaction returns, we can fetch the state of the game account. You can fetch account state using the `program.account` namespace.
+1. Finally, we verify the game has been set up properly by comparing the actual state and the expected state. To learn how Anchor maps the Rust types to the js/ts types, check out the [Javascript Anchor Types Reference](./../anchor_references/javascript_anchor_types_reference.md).
 
 Now, run `anchor test`. This starts up (and subsequently shuts down) a local validator (make sure you don't have one running before) and runs your tests using the test script defined in `Anchor.toml`.
 
