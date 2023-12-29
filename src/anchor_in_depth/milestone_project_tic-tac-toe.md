@@ -54,7 +54,7 @@ pub enum Sign {
 }
 ```
 
-Both `GameState` and `Sign` derive some traits. `AnchorSerialize` and `AnchorDeserialize` are the crucial ones. All types that are used in types that are marked with `#[account]` must implement these two traits (or be marked with `#[account]` themselves). All other traits are important to our game logic and we are going to use them later. Generally, it is good practice to derive even more traits to make the life of others trying to interface with your program easier (see [Rust's API guidelines](https://rust-lang.github.io/api-guidelines/interoperability.html#types-eagerly-implement-common-traits-c-common-traits)) but for brevity's sake, we are not going to do that in this guide.
+Both `GameState` and `Sign` derive some traits. `AnchorSerialize` and `AnchorDeserialize` are the crucial ones. All types used within declarations marked with `#[account]` must implement these two traits (or be marked with `#[account]` themselves). All other traits are important to our game logic and we are going to use them later. Generally, it is good practice to derive even more traits to make the life of others trying to interface with your program easier (see [Rust's API guidelines](https://rust-lang.github.io/api-guidelines/interoperability.html#types-eagerly-implement-common-traits-c-common-traits)) but for brevity's sake, we are not going to do that in this guide.
 
 This won't quite work yet because `FromPrimitive` and `ToPrimitive` are unknown. Go to the `Cargo.toml` file right outside `src` (not the one at the root of the workspace) and add these two dependencies:
 
